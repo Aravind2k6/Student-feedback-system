@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/Aravind2k6/Student-feedback-system.git",
+"homepage": "https://aravind2k6.github.io/Student-feedback-system/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
