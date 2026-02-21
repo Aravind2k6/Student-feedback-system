@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Users, BookOpen, UserCheck, TrendingUp, BarChart3, PlusCircle } from 'lucide-react';
+import { Users, BookOpen, UserCheck, TrendingUp, BarChart3, PlusCircle, Rocket, Brain, Bell, FileText, Globe, Lock } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
 const AdminDashboard = () => {
@@ -73,9 +73,9 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Create New Campaign Widget */}
-                <div className="glass-panel" style={{ border: '1px solid var(--accent-primary)', background: 'rgba(249,115,22,0.03)' }}>
+                <div className="glass-panel" style={{ border: '1px solid var(--accent-primary)', background: 'rgba(245,158,11,0.06)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1.25rem' }}>
-                        <div style={{ width: 32, height: 32, borderRadius: 8, background: 'var(--accent-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
+                        <div style={{ width: 32, height: 32, borderRadius: 8, background: 'var(--accent-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0f172a' }}>
                             <PlusCircle size={18} />
                         </div>
                         <h3 style={{ fontSize: '1rem', fontWeight: 800 }}>Create Feedback Campaign</h3>
@@ -154,6 +154,37 @@ const AdminDashboard = () => {
                             })}
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            {/* Upcoming Features */}
+            <div className="glass-panel animate-fade-in animate-delay-3" style={{ marginTop: '2rem', border: '1px solid rgba(124,108,245,0.3)', background: 'rgba(124,108,245,0.04)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1.5rem' }}>
+                    <div style={{ width: 34, height: 34, borderRadius: 9, background: 'linear-gradient(135deg,#7c6cf5,#a855f7)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', flexShrink: 0 }}>
+                        <Rocket size={17} />
+                    </div>
+                    <div>
+                        <h3 style={{ fontSize: '1rem', fontWeight: 800, marginBottom: '0.05rem' }}>Upcoming Features</h3>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', margin: 0 }}>Planned improvements coming soon</p>
+                    </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '0.85rem' }}>
+                    {[
+                        { icon: <Brain size={16} />, color: '#a855f7', bg: 'rgba(168,85,247,0.12)', title: 'AI-Powered Insights', desc: 'Automatic analysis of feedback patterns using machine learning to suggest curriculum improvements.' },
+                        { icon: <Bell size={16} />, color: '#f59e0b', bg: 'rgba(245,158,11,0.12)', title: 'Smart Notifications', desc: 'Auto-alert admins and teachers when course ratings drop below a configurable threshold.' },
+
+                        { icon: <Globe size={16} />, color: '#00d4ff', bg: 'rgba(0,212,255,0.12)', title: 'Multi-Language Support', desc: 'Feedback forms in regional languages to improve accessibility for all students.' },
+
+                    ].map((f, i) => (
+                        <div key={i} style={{ display: 'flex', gap: '0.75rem', padding: '0.9rem', borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                            <div style={{ width: 34, height: 34, borderRadius: 9, background: f.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color: f.color, flexShrink: 0 }}>{f.icon}</div>
+                            <div>
+                                <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)', marginBottom: '0.25rem' }}>{f.title}</div>
+                                <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', lineHeight: 1.55 }}>{f.desc}</div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
 

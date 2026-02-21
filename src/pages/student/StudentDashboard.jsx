@@ -14,8 +14,8 @@ const RatingWidget = ({ value, onChange }) => {
                         transition: 'var(--transition)', cursor: 'pointer',
                         border: `2px solid ${value === n ? 'var(--accent-primary)' : 'var(--glass-border)'}`,
                         background: value === n ? 'var(--accent-gradient)' : 'rgba(255,255,255,0.05)',
-                        color: value === n ? '#fff' : 'var(--text-secondary)',
-                        boxShadow: value === n ? '0 8px 20px rgba(249,115,22,0.3)' : 'none',
+                        color: value === n ? '#0f172a' : 'var(--text-secondary)',
+                        boxShadow: value === n ? '0 8px 20px rgba(245,158,11,0.35)' : 'none',
                     }}
                 >
                     {n}
@@ -103,7 +103,7 @@ const StudentDashboard = () => {
                     {!selectedCampaign ? (
                         <div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.75rem' }}>
-                                <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(249,115,22,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-primary)' }}>
+                                <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(245,158,11,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-primary)' }}>
                                     <ClipboardList size={22} />
                                 </div>
                                 <div>

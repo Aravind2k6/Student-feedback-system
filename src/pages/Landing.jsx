@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import {
     BookOpen, MessageSquare, BarChart3, ShieldCheck, Users, TrendingUp,
-    Star, ArrowRight, CheckCircle, Zap, Bell, ChevronRight, Mail,
+    Star, ArrowRight, CheckCircle, Zap, Bell, ChevronRight, ChevronUp, Mail,
     Phone, MapPin, Github, Twitter, Linkedin, Menu, X
 } from 'lucide-react';
 
@@ -30,7 +30,7 @@ const Navbar = () => {
                     {/* Logo */}
                     <div className="navbar-logo">
                         <div className="navbar-logo-icon">
-                            <BookOpen size={18} color="#000d1a" strokeWidth={2.5} />
+                            <BookOpen size={18} color="#f59e0b" strokeWidth={2.5} />
                         </div>
                         <span>EduFeedback</span>
                     </div>
@@ -63,7 +63,7 @@ const Navbar = () => {
             {menuOpen && (
                 <div className="animate-fade" style={{
                     position: 'fixed', top: 'var(--navbar-height)', left: 0, right: 0,
-                    background: 'rgba(7,13,26,0.98)', backdropFilter: 'blur(20px)',
+                    background: 'rgba(15,23,42,0.98)', backdropFilter: 'blur(20px)',
                     zIndex: 999, padding: '1.5rem 2rem', borderBottom: '1px solid var(--glass-border)'
                 }}>
                     {['home', 'features', 'about', 'contact'].map(id => (
@@ -116,18 +116,10 @@ const HeroSection = () => {
                     </button>
                 </div>
 
-                <div className="hero-stats animate-fade-in animate-delay-4" style={{ justifyContent: 'center' }}>
-                    {[
-                        { value: '10K+', label: 'Students' },
-                        { value: '98%', label: 'Satisfaction' },
-                        { value: '500+', label: 'Institutions' },
-                    ].map((s, i) => (
-                        <div className="hero-stat-item" key={i}>
-                            <span className="hero-stat-value">{s.value}</span>
-                            <span className="hero-stat-label">{s.label}</span>
-                        </div>
-                    ))}
-                </div>
+                <p className="animate-fade-in animate-delay-4" style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '1.05rem', marginTop: '1.25rem', letterSpacing: '0.02em' }}>
+                    Feedback that fuels educational excellence.
+                </p>
+
             </div>
         </section>
     );
@@ -135,17 +127,79 @@ const HeroSection = () => {
 
 /* ── Features Section ─────────────────────────────────── */
 const FeaturesSection = () => {
+    const [expandedIndex, setExpandedIndex] = useState(null);
+
     const features = [
-        { icon: <MessageSquare size={24} />, title: 'Submit Feedback', desc: 'Students can easily submit structured feedback for every course with an intuitive rating system.', color: '#00d4ff', bg: 'rgba(0,212,255,0.12)' },
-        { icon: <BarChart3 size={24} />, title: 'Analytics Dashboard', desc: 'Real-time charts and analytics help administrators understand trends and improve teaching quality.', color: '#00e5a0', bg: 'rgba(0,229,160,0.12)' },
-        { icon: <ShieldCheck size={24} />, title: 'Secure & Private', desc: 'Role-based authentication ensures only authorized users access sensitive feedback data.', color: '#0088ff', bg: 'rgba(0,136,255,0.12)' },
-        { icon: <BookOpen size={24} />, title: 'Custom Forms', desc: 'Admins can create tailored feedback forms for specific courses with multiple question types.', color: '#ffb800', bg: 'rgba(255,184,0,0.12)' },
-        { icon: <TrendingUp size={24} />, title: 'View Reports', desc: 'Generate comprehensive reports with export options to track institutional performance over time.', color: '#ff4d6a', bg: 'rgba(255,77,106,0.12)' },
-        { icon: <Users size={24} />, title: 'Student Management', desc: 'Admins can manage student records, monitor activity, and group feedback by cohort or subject.', color: '#a855f7', bg: 'rgba(168,85,247,0.12)' },
+        {
+            icon: <MessageSquare size={24} />, title: 'Submit Feedback',
+            desc: 'Students can easily submit structured feedback for every course with an intuitive rating system.',
+            color: '#00d4ff', bg: 'rgba(0,212,255,0.12)',
+            points: [
+                'Students can rate courses quickly. No long forms to fill.',
+                'Feedback is private. Only teachers and admins can see it.',
+                'Simple ratings: Poor, Average, Good, or Excellent. Easy to choose.',
+                'Students can add extra comments if they want to say more.',
+            ],
+        },
+        {
+            icon: <BarChart3 size={24} />, title: 'Analytics Dashboard',
+            desc: 'Real-time charts and analytics help administrators understand trends and improve teaching quality.',
+            color: '#00e5a0', bg: 'rgba(0,229,160,0.12)',
+            points: [
+                'Charts show feedback as it comes in. Updates in real time.',
+                'Compare courses and teachers. Find what works and what does not.',
+                'Use real data to decide. No guesswork needed.',
+                'See how students feel over time. Track progress clearly.',
+            ],
+        },
+        {
+            icon: <ShieldCheck size={24} />, title: 'Secure & Private',
+            desc: 'Role-based authentication ensures only authorized users access sensitive feedback data.',
+            color: '#0088ff', bg: 'rgba(0,136,255,0.12)',
+            points: [
+                'Only admins and teachers see the feedback. Students cannot see others\' answers.',
+                'Each user sees only what they are allowed to see. No extra access.',
+                'Student feedback is kept safe. We protect their privacy.',
+                'System is built to be secure. Students can share honestly.',
+            ],
+        },
+        {
+            icon: <BookOpen size={24} />, title: 'Custom Forms',
+            desc: 'Admins can create tailored feedback forms for specific courses with multiple question types.',
+            color: '#ffb800', bg: 'rgba(255,184,0,0.12)',
+            points: [
+                'Admins create forms for each course. No fixed template. Make it fit your needs.',
+                'Add rating scales, text boxes, or multiple choice. Mix and match as needed.',
+                'Create and edit forms easily. No coding or tech skills required.',
+                'Set different forms for different departments, semesters, or teachers.',
+            ],
+        },
+        {
+            icon: <TrendingUp size={24} />, title: 'View Reports',
+            desc: 'Generate comprehensive reports with export options to track institutional performance over time.',
+            color: '#ff4d6a', bg: 'rgba(255,77,106,0.12)',
+            points: [
+                'Get a full report with one click. No need to add numbers by hand.',
+                'Download as PDF or Excel. Use in meetings or presentations.',
+                'Compare results across semesters and courses. See who is doing well.',
+                'Track how the college is doing over time. Clear numbers and charts.',
+            ],
+        },
+        {
+            icon: <Users size={24} />, title: 'Student Management',
+            desc: 'Admins can manage student records, monitor activity, and group feedback by cohort or subject.',
+            color: '#a855f7', bg: 'rgba(168,85,247,0.12)',
+            points: [
+                'See which students have given feedback and which have not. Easy to follow up.',
+                'Group feedback by batch, course, or subject. Find patterns quickly.',
+                'Check all student activity in one screen. No need to search.',
+                'Student details are organized. Admins can find what they need fast.',
+            ],
+        },
     ];
 
     return (
-        <section id="features" className="section" style={{ background: 'linear-gradient(180deg, var(--bg-primary) 0%, rgba(13,22,39,0.5) 100%)' }}>
+        <section id="features" className="section" style={{ background: 'linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)' }}>
             <div className="section-inner">
                 <div className="section-header">
                     <p className="section-label">Features</p>
@@ -161,13 +215,55 @@ const FeaturesSection = () => {
                             </div>
                             <h3 className="feature-title">{f.title}</h3>
                             <p className="feature-desc">{f.desc}</p>
-                            <div style={{ marginTop: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.35rem', color: f.color, fontSize: '0.85rem', fontWeight: 600 }}>
+
+                            <button type="button" onClick={() => setExpandedIndex(i)} style={{ marginTop: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.35rem', color: f.color, fontSize: '0.85rem', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', padding: 0, textAlign: 'left', transition: 'var(--transition)' }}
+                                onMouseOver={e => { e.currentTarget.style.opacity = '0.85'; }}
+                                onMouseOut={e => { e.currentTarget.style.opacity = '1'; }}>
                                 Learn more <ChevronRight size={14} />
-                            </div>
+                            </button>
                         </div>
                     ))}
                 </div>
             </div>
+
+            {/* Popup modal for Learn more */}
+            {expandedIndex !== null && (() => {
+                const f = features[expandedIndex];
+                return (
+                    <div className="animate-fade" style={{
+                        position: 'fixed', inset: 0, zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        padding: '1.5rem', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(6px)',
+                    }} onClick={() => setExpandedIndex(null)}>
+                        <div style={{
+                            width: '100%', maxWidth: 480,
+                            background: 'var(--bg-card)', border: `1px solid rgba(148,163,184,0.15)`, borderRadius: 18,
+                            padding: '2rem 2.25rem', boxShadow: '0 25px 60px rgba(0,0,0,0.5)',
+                            position: 'relative',
+                        }} onClick={e => e.stopPropagation()}>
+                            <button type="button" onClick={() => setExpandedIndex(null)} style={{
+                                position: 'absolute', top: '1.25rem', right: '1.25rem', background: 'none', border: 'none',
+                                cursor: 'pointer', color: 'var(--text-muted)', padding: 4,
+                            }}><X size={20} /></button>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1.5rem' }}>
+                                <div style={{ width: 44, height: 44, borderRadius: 12, background: f.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color: f.color }}>{f.icon}</div>
+                                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)' }}>{f.title}</h3>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                                {f.points.map((point, pi) => (
+                                    <div key={pi} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.55rem', fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+                                        <span style={{ color: f.color, flexShrink: 0 }}>•</span>
+                                        <span>{point}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <button type="button" onClick={() => setExpandedIndex(null)} style={{
+                                marginTop: '1.5rem', padding: '0.6rem 1.5rem', borderRadius: 10, background: f.bg, color: f.color,
+                                border: 'none', cursor: 'pointer', fontSize: '0.88rem', fontWeight: 600,
+                            }}>Close</button>
+                        </div>
+                    </div>
+                );
+            })()}
         </section>
     );
 };
@@ -205,55 +301,43 @@ const HowItWorks = () => {
 
 /* ── About Section ────────────────────────────────────── */
 const AboutSection = () => (
-    <section id="about" className="section" style={{ background: 'linear-gradient(180deg, rgba(13,22,39,0.3) 0%, var(--bg-primary) 100%)' }}>
+    <section id="about" className="section" style={{ background: 'linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%)' }}>
         <div className="section-inner">
-            <div className="about-grid">
-                <div className="animate-fade-in">
-                    <p className="section-label">About</p>
-                    <h2 className="section-title" style={{ textAlign: 'left', marginBottom: '1.25rem' }}>
-                        Empowering Educational Excellence Through Data
-                    </h2>
-                    <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: '1.5rem' }}>
-                        EduFeedback was built with a clear mission: to give every student a voice and every educator the insights they need to grow. Our platform eliminates traditional paper-based surveys and replaces them with a dynamic, real-time digital system.
-                    </p>
-                    <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: '2rem' }}>
-                        From small coaching centers to large universities, our system adapts to your institution's unique needs while maintaining simplicity and privacy.
-                    </p>
-                    <div className="grid-2" style={{ gap: '1rem' }}>
-                        {[
-                            { label: 'Real-time Feedback', icon: <Zap size={16} /> },
-                            { label: 'Secure Authentication', icon: <ShieldCheck size={16} /> },
-                            { label: 'Export Reports', icon: <BarChart3 size={16} /> },
-                            { label: 'Mobile Responsive', icon: <Bell size={16} /> },
-                        ].map((item, i) => (
-                            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-                                <span style={{ color: 'var(--accent-primary)' }}>{item.icon}</span>
-                                {item.label}
-                            </div>
-                        ))}
-                    </div>
-                </div>
+            <div className="animate-fade-in" style={{ maxWidth: '760px', margin: '0 auto', textAlign: 'center', marginBottom: '3rem' }}>
+                <p className="section-label">About</p>
+                <h2 className="section-title">
+                    Empowering Educational Excellence Through Data
+                </h2>
+                <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, marginTop: '1rem' }}>
+                    EduFeedback was built to give every student a voice and every educator the insights they need to grow. Our platform replaces paper-based surveys with a dynamic, real-time digital system — adapting to institutions of every size while keeping things simple and private.
+                </p>
+            </div>
 
-                <div className="animate-fade-in animate-delay-2">
-                    <div className="glass-panel" style={{ padding: '2.5rem' }}>
-                        <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
-                            {[
-                                { value: '500+', label: 'Institutions', color: 'var(--accent-primary)' },
-                                { value: '10K+', label: 'Students', color: 'var(--success)' },
-                                { value: '98%', label: 'Uptime', color: 'var(--warning)' },
-                            ].map((s, i) => (
-                                <div key={i} style={{ flex: 1, minWidth: '80px' }}>
-                                    <div style={{ fontSize: '1.8rem', fontWeight: 800, color: s.color }}>{s.value}</div>
-                                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{s.label}</div>
-                                </div>
-                            ))}
-                        </div>
-                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.7, borderTop: '1px solid var(--glass-border)', paddingTop: '1.5rem' }}>
-                            "EduFeedback transformed how we collect and use student insights. Our course quality scores improved by 32% in the first semester!" <br />
-                            <span style={{ color: 'var(--accent-primary)', fontWeight: 600, fontSize: '0.85rem', marginTop: '0.75rem', display: 'block' }}>— Dr. Sarah Mitchell, Dean of Academic Affairs</span>
-                        </p>
+            <div className="animate-fade-in animate-delay-1" style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gap: '1.25rem',
+            }}>
+                {[
+                    { icon: <Zap size={22} />, label: 'Real-time Feedback', desc: 'Instant results as students submit responses.', color: '#f59e0b', bg: 'rgba(245,158,11,0.1)' },
+                    { icon: <ShieldCheck size={22} />, label: 'Secure & Private', desc: 'Role-based access keeps data protected.', color: '#00d4ff', bg: 'rgba(0,212,255,0.1)' },
+                    { icon: <BarChart3 size={22} />, label: 'Export Reports', desc: 'Download insights as PDF or Excel anytime.', color: '#00e5a0', bg: 'rgba(0,229,160,0.1)' },
+                    { icon: <Bell size={22} />, label: 'Mobile Responsive', desc: 'Works seamlessly on any device or screen.', color: '#a855f7', bg: 'rgba(168,85,247,0.1)' },
+                ].map((item, i) => (
+                    <div key={i} className="glass-panel animate-fade-in" style={{
+                        padding: '1.6rem 1.4rem', borderRadius: 16,
+                        animationDelay: `${i * 0.1}s`,
+                        borderTop: `2px solid ${item.color}55`,
+                    }}>
+                        <div style={{
+                            width: 46, height: 46, borderRadius: 12,
+                            background: item.bg, display: 'flex', alignItems: 'center',
+                            justifyContent: 'center', color: item.color, marginBottom: '1rem',
+                        }}>{item.icon}</div>
+                        <div style={{ fontWeight: 700, fontSize: '0.95rem', marginBottom: '0.4rem', color: 'var(--text-primary)' }}>{item.label}</div>
+                        <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', lineHeight: 1.6 }}>{item.desc}</div>
                     </div>
-                </div>
+                ))}
             </div>
         </div>
     </section>
@@ -318,7 +402,7 @@ const Footer = () => {
                     <div className="footer-brand">
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.25rem' }}>
                             <div style={{ background: 'var(--accent-gradient)', width: 32, height: 32, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <BookOpen size={16} color="#000d1a" />
+                                <BookOpen size={16} color="#0f172a" />
                             </div>
                             <span style={{ fontWeight: 700, fontSize: '1.05rem' }}>EduFeedback</span>
                         </div>
@@ -355,6 +439,9 @@ const Footer = () => {
                 <div className="footer-bottom">
                     <span>© 2026 EduFeedback. All rights reserved.</span>
                     <span style={{ color: 'var(--accent-primary)' }}>Built for better education ✦</span>
+                </div>
+                <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.82rem', color: 'var(--text-muted)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+                    Learn. Feedback. Grow.
                 </div>
             </div>
         </footer>
